@@ -1,9 +1,11 @@
 import streamlit as st
+import pandas as pd
 from datetime import date
 
 from src.tracker import db
 from src.tracker import services
 
+CATEGORIES = ["Food", "Transport", "Bills", "Shopping", "Fun", "Other"]
 
 st.title("💸 Expense Tracker")
 
@@ -22,7 +24,7 @@ with st.sidebar.form("budgets_form"):
             set_budget(cat, value)
         st.success("Budgets saved!")
 
-budgets = load_budgets()
+budgets = services.load_budgets()
 
 # ---------- Add expense ----------
 with st.form("add_expense", clear_on_submit=True):
@@ -31,11 +33,11 @@ with st.form("add_expense", clear_on_submit=True):
     amount = st.number_input("Amount", min_value=0.0, step=1.0)
     note = st.text_input("Note (optional)")
     if st.form_submit_button("Add expense") and amount > 0:
-        add_expense(d, category, amount, note)
+        services.add_expense(d, category, amount, note)
         st.success("Added!")
 
 # ---------- Load data ----------
-df = load_expenses()
+df = services.load_expenses()
 today = date.today()
 
 if df.empty:

@@ -21,7 +21,7 @@ with st.sidebar.form("budgets_form"):
     }
     if st.form_submit_button("Save budgets"):
         for cat, value in new_budgets.items():
-            set_budget(cat, value)
+            services.set_budget(cat, value)
         st.success("Budgets saved!")
 
 budgets = services.load_budgets()
@@ -87,5 +87,5 @@ if not df.empty:
         }
         choice = st.selectbox("Pick one", list(options.keys()))
         if st.button("Delete"):
-            delete_expense(options[choice])
+            services.delete_expense(options[choice])
             st.rerun()  

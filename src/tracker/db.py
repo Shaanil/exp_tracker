@@ -6,7 +6,6 @@ def get_conn():
     return sqlite3.connect(DB)
     
 
-print(get_conn())
 def init_db():
     with get_conn() as conn:
         conn.execute("""

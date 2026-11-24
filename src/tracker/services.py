@@ -34,7 +34,7 @@ def budget_by_category(cat):
     return db.load_budgets().get(cat, 0.0)
 
     
-def spent_ratio (budget, spent):
+def spent_ratio (spent,budget):
     if budget > 0:
         ratio = spent / budget
     else:

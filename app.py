@@ -61,7 +61,7 @@ for cat in services.CATEGORIES :
     spent_category.append(spent_by_cat)
     spent= services.spent_by_category(cat)
     budget= services.budget_by_category(cat)
-    ratio= services.spent_ratio(spent,spent)
+    ratio= services.spent_ratio(spent,budget)
     
     st.write(f"**{cat}**: {spent} / {budget}")
     st.progress(min(ratio, 1.0))
@@ -71,7 +71,7 @@ for cat in services.CATEGORIES :
         st.warning(f"You've used {ratio:.0%} of this budget")
 
 if not this_month.empty:
-    st.bar_chart(spent_category)
+    st.bar_chart(spent_category,)
 
 # ---------- All expenses + delete ----------
 if not df.empty:

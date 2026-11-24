@@ -55,10 +55,10 @@ st.metric(
     delta_color="off",
 )
 
-spent_category=[]
+spent_category={}
 for cat in services.CATEGORIES :
     spent_by_cat= services.spent_by_category(cat)
-    spent_category.append(spent_by_cat)
+    spent_category.update({cat:spent_by_cat})
     spent= services.spent_by_category(cat)
     budget= services.budget_by_category(cat)
     ratio= services.spent_ratio(spent,budget)
@@ -71,7 +71,7 @@ for cat in services.CATEGORIES :
         st.warning(f"You've used {ratio:.0%} of this budget")
 
 if not this_month.empty:
-    st.bar_chart(spent_category,)
+    st.bar_chart(spent_category)
 
 # ---------- All expenses + delete ----------
 if not df.empty:

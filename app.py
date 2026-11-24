@@ -1,11 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import date
-
-from src.tracker import db
 from src.tracker import services
-
-CATEGORIES = ["Food", "Transport", "Bills", "Shopping", "Fun", "Other"]
 
 st.title("💸 Expense Tracker")
 
@@ -17,7 +13,7 @@ with st.sidebar.form("budgets_form"):
         cat: st.number_input(
             cat, min_value=0.0, step=10.0, value=saved_budgets.get(cat, 0.0)
         )
-        for cat in CATEGORIES
+        for cat in services.CATEGORIES
     }
     if st.form_submit_button("Save budgets"):
         for cat, value in new_budgets.items():
@@ -29,7 +25,7 @@ budgets = services.load_budgets()
 # ---------- Add expense ----------
 with st.form("add_expense", clear_on_submit=True):
     d = st.date_input("Date", date.today())
-    category = st.selectbox("Category", CATEGORIES)
+    category = st.selectbox("Category", services.CATEGORIES)
     amount = st.number_input("Amount", min_value=0.0, step=1.0)
     note = st.text_input("Note (optional)")
     if st.form_submit_button("Add expense") and amount > 0:
@@ -51,7 +47,6 @@ else:
 
 # ---------- This month ----------
 st.subheader("This month")
-spent_by_cat = this_month.groupby("category")["amount"].sum()
 total_budget = services.total_budget()
 st.metric(
     "Total spent",
@@ -60,17 +55,15 @@ st.metric(
     delta_color="off",
 )
 
-for cat in CATEGORIES:
-    budget = budgets.get(cat, 0.0)
-    spent = float(spent_by_cat.get(cat, 0.0))
-    if budget > 0:
-        ratio = spent / budget
-        st.write(f"**{cat}**: {spent:,.2f} / {budget:,.2f}")
-        st.progress(min(ratio, 1.0))
-        if ratio > 1:
-            st.error(f"Over budget by {spent - budget:,.2f}")
-        elif ratio >= 0.8:
-            st.warning(f"You've used {ratio:.0%} of this budget")
+for cat in services.CATEGORIES :
+    cat,spent,budget,ratio,spent_by_cat= services.spent_by_category(cat)
+    
+    st.write(f"**{cat}**: {spent:,.2f} / {budget:,.2f}")
+    st.progress(min(ratio, 1.0))
+    if ratio > 1:
+        st.error(f"Over budget by {spent - budget:,.2f}")
+    elif ratio >= 0.8:
+        st.warning(f"You've used {ratio:.0%} of this budget")
 
 if not this_month.empty:
     st.bar_chart(spent_by_cat)

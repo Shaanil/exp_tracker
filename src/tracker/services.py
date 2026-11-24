@@ -1,28 +1,50 @@
 import pandas as pd
 from src.tracker import db
+from datetime import date
 
+CATEGORIES = ["Food", "Transport", "Bills", "Shopping", "Fun", "Other"]
 
 def add_expense(d, category, amount, note):
-    db.add_expense(d, category, amount, note)
+    return db.add_expense(d, category, amount, note)
 
 
 def delete_expense(expense_id):
-    db.delete_expense(delete_expense)
+    return db.delete_expense(delete_expense)
 
 
 def load_expenses():
-    db.load_expenses()
+    return db.load_expenses()
 
 
 def set_budget(category, amount):
-    db.set_budget(category, amount)
+    return db.set_budget(category, amount)
 
 
 def load_budgets():
-    db.load_expenses()
+    return db.load_budgets()
 
 def total_budget():
     return sum(load_budgets().values())
 
-def spent_by_category(category):
-    return "work in progress"
+def spent_by_category(cat):
+    
+    spent_by_cat = spent_this_month().groupby("category")["amount"].sum()
+
+    budget = load_budgets().get(cat, 0.0)
+    spent = float(spent_by_cat.get(cat, 0.0))
+    if budget > 0:
+        ratio = spent / budget
+    else:
+        ratio = 0
+            
+    return (cat,spent,budget,ratio,spent_by_cat)
+
+
+
+def spent_this_month():
+        today = date.today()
+        df = db.load_expenses()
+        df["date"] = pd.to_datetime(df["date"])
+        this_month = df[(df['date'].dt.month == today.month) & (df['date'].dt.year == today.year)]    
+        return this_month
+

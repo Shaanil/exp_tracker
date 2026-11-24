@@ -40,7 +40,8 @@ def add_expense(d, category, amount, note):
 
 def delete_expense(expense_id):
     with get_conn() as conn:
-        conn.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
+        conn.execute(
+            "DELETE FROM expenses WHERE id = ?", (expense_id,))
 
 
 def load_expenses():

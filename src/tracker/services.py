@@ -9,7 +9,7 @@ def add_expense(d, category, amount, note):
 
 
 def delete_expense(expense_id):
-    return db.delete_expense(delete_expense)
+    return db.delete_expense(expense_id)
 
 
 def load_expenses():
@@ -27,18 +27,19 @@ def total_budget():
     return sum(load_budgets().values())
 
 def spent_by_category(cat):
-    
-    spent_by_cat = spent_this_month().groupby("category")["amount"].sum()
+    spent_by_cat = spent_this_month().groupby("category")["amount"].sum() 
+    return (spent_by_cat.get(cat, 0.0))     
+     
+def budget_by_category(cat):
+    return db.load_budgets().get(cat, 0.0)
 
-    budget = load_budgets().get(cat, 0.0)
-    spent = float(spent_by_cat.get(cat, 0.0))
+    
+def spent_ratio (budget, spent):
     if budget > 0:
         ratio = spent / budget
     else:
         ratio = 0
-            
-    return (cat,spent,budget,ratio,spent_by_cat)
-
+    return ratio
 
 
 def spent_this_month():

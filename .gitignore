@@ -1,4 +1,6 @@
 /.DS_Store
 /expenses.db
 /venv
-/data/expenses.db
+/data/*.db
+__pycache__/
+.pytest_cache/

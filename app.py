@@ -63,7 +63,7 @@ for cat in services.CATEGORIES :
     budget= services.budget_by_category(cat)
     ratio= services.spent_ratio(spent,budget)
     
-    st.write(f"**{cat}**: {spent} / {budget}")
+    st.write(f"**{cat}**: {spent:,.2f} / {budget:,.2f}")
     st.progress(min(ratio, 1.0))
     if ratio > 1:
         st.error(f"Over budget by {spent - budget:,.2f}")

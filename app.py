@@ -52,7 +52,7 @@ else:
 # ---------- This month ----------
 st.subheader("This month")
 spent_by_cat = this_month.groupby("category")["amount"].sum()
-total_budget = sum(budgets.values())
+total_budget = services.total_budget()
 st.metric(
     "Total spent",
     f"{this_month['amount'].sum():,.2f}",

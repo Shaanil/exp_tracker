@@ -1,6 +1,8 @@
-import streamlit as st
-import pandas as pd
 from datetime import date
+
+import pandas as pd
+import streamlit as st
+
 from src.tracker import services
 
 st.title("💸 Expense Tracker")

@@ -33,7 +33,6 @@ def total_budget():
 
 def spent_by_category(cat):
     spent_by_cat = spent_this_month().groupby("category")["amount"].sum()
-    print(spent_by_cat.get("Bills",0.0))
     return spent_by_cat.get(cat, 0.0)
 
 

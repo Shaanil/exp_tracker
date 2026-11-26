@@ -1,5 +1,5 @@
-import os
 from datetime import date
+
 import pytest
 
 import src.tracker.db
@@ -8,9 +8,8 @@ from src.tracker.services import (
     load_expenses,
     spent_by_category,
     spent_ratio,
-    delete_expense,
 )
-_testDB = 'tests/test_expenses.db'
+
 d = date.today()
 
 

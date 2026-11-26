@@ -3,9 +3,10 @@ import pandas as pd
 
 DB = "data/expenses.db"
 
+
 def get_conn():
     return sqlite3.connect(DB)
-    
+
 
 def init_db():
     with get_conn() as conn:
@@ -29,7 +30,6 @@ def init_db():
 init_db()
 
 
-
 def add_expense(d, category, amount, note):
     with get_conn() as conn:
         conn.execute(
@@ -40,8 +40,7 @@ def add_expense(d, category, amount, note):
 
 def delete_expense(expense_id):
     with get_conn() as conn:
-        conn.execute(
-            "DELETE FROM expenses WHERE id = ?", (expense_id,))
+        conn.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
 
 
 def load_expenses():

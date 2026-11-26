@@ -1,11 +1,14 @@
 import sqlite3
 import pandas as pd
+from pathlib import Path
 
-DB = "data/expenses.db"
+DB = Path("data/expenses.db")
+DB.parent.mkdir(parents=True, exist_ok=True)
+DB.touch(exist_ok=True)
 
 def get_conn():
     return sqlite3.connect(DB)
-    
+
 
 def init_db():
     with get_conn() as conn:
@@ -29,7 +32,6 @@ def init_db():
 init_db()
 
 
-
 def add_expense(d, category, amount, note):
     with get_conn() as conn:
         conn.execute(
@@ -40,8 +42,7 @@ def add_expense(d, category, amount, note):
 
 def delete_expense(expense_id):
     with get_conn() as conn:
-        conn.execute(
-            "DELETE FROM expenses WHERE id = ?", (expense_id,))
+        conn.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
 
 
 def load_expenses():

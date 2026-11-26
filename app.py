@@ -55,14 +55,14 @@ st.metric(
     delta_color="off",
 )
 
-spent_category={}
-for cat in services.CATEGORIES :
-    spent_by_cat= services.spent_by_category(cat)
-    spent_category.update({cat:spent_by_cat})
-    spent= services.spent_by_category(cat)
-    budget= services.budget_by_category(cat)
-    ratio= services.spent_ratio(spent,budget)
-    
+spent_category = {}
+for cat in services.CATEGORIES:
+    spent_by_cat = services.spent_by_category(cat)
+    spent_category.update({cat: spent_by_cat})
+    spent = services.spent_by_category(cat)
+    budget = services.budget_by_category(cat)
+    ratio = services.spent_ratio(spent, budget)
+
     st.write(f"**{cat}**: {spent:,.2f} / {budget:,.2f}")
     st.progress(min(ratio, 1.0))
     if ratio > 1:
@@ -86,4 +86,4 @@ if not df.empty:
         choice = st.selectbox("Pick one", list(options.keys()))
         if st.button("Delete"):
             services.delete_expense(options[choice])
-            st.rerun()  
+            st.rerun()

@@ -44,6 +44,7 @@ def test_spent_ratio():
     assert spent_ratio(spent=1000, budget=1500) < 1
     assert spent_ratio(spent=1500, budget=1000) > 1
     assert spent_ratio(spent=1000, budget=1000) == 1
+    assert spent_ratio(spent=1000, budget=0) == 0 # Considered as Infinity Budget
 
 def test_spent_by_category():
     

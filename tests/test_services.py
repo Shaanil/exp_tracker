@@ -17,8 +17,6 @@ def test_app_function (monkeypatch):
     
     # Override the constant or environment variable directly inside the test
     monkeypatch.setattr(src.tracker.db, "DB", str(_testDB))
-    # Or: monkeypatch.setenv("DATABASE_URL", f"sqlite:///{fake_db}")
-    
     src.tracker.db.init_db()
     assert os.path.exists(_testDB)
 

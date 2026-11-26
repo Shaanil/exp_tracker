@@ -59,9 +59,8 @@ st.metric(
 
 spent_category = {}
 for cat in services.CATEGORIES:
-    spent_by_cat = services.spent_by_category(cat)
-    spent_category.update({cat: spent_by_cat})
     spent = services.spent_by_category(cat)
+    spent_category.update({cat: spent})
     budget = services.budget_by_category(cat)
     ratio = services.spent_ratio(spent, budget)
 

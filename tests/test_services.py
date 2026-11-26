@@ -7,7 +7,7 @@ from src.tracker.services import (
     load_expenses,
     spent_ratio,
 )
-
+_testDB = 'tests/test_expenses.db'
 
 # Test: Verify Test
 def test_app_function (monkeypatch):
@@ -25,13 +25,14 @@ def test_app_function (monkeypatch):
 
 
 # Test: Adding to DB
-def test_add_expense():
+def test_add_expense(monkeypatch):
 
     d = date.today()
     category = "Bills"
     amount = 500
     note = "Test"
 
+    monkeypatch.setattr(src.tracker.db, "DB", str(_testDB))
     add_expense(d, category, amount, note)
     last_row = load_expenses().iloc[0]
     assert last_row["category"] == "Bills"

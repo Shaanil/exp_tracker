@@ -7,6 +7,7 @@ DB = Path("data/expenses.db")
 DB.parent.mkdir(parents=True, exist_ok=True)
 DB.touch(exist_ok=True)
 
+
 def get_conn():
     return sqlite3.connect(DB)
 

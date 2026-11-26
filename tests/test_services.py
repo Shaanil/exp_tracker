@@ -24,7 +24,7 @@ def auto_isolate_db(monkeypatch, tmp_path):
 
 
 # Test: Adding to DB
-def test_add_expense(monkeypatch):
+def test_add_expense():
     category = "Fun"
     amount = 500
     note = "Test"

@@ -1,3 +1,4 @@
+from pathlib import Path
 from src.tracker.services import (
     load_expenses,
     add_expense,
@@ -5,6 +6,11 @@ from src.tracker.services import (
     spent_by_category,
 )
 from datetime import date
+
+#Testing Database
+_testDB = Path(tests/test_expenses.db)
+_testDB.parent.mkdir(parents=True,exist_ok=True)
+_testDB.touch(exist_ok=True)
 
 
 # Test: Adding to DB

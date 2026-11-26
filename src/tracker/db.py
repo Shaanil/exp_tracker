@@ -1,6 +1,7 @@
 import sqlite3
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
 
 DB = Path("data/expenses.db")
 DB.parent.mkdir(parents=True, exist_ok=True)

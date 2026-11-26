@@ -1,16 +1,27 @@
-from pathlib import Path
-from src.tracker.services import (
-    load_expenses,
-    add_expense,
-    spent_ratio,
-    spent_by_category,
-)
+import os
 from datetime import date
 
-#Testing Database
-_testDB = Path(tests/test_expenses.db)
-_testDB.parent.mkdir(parents=True,exist_ok=True)
-_testDB.touch(exist_ok=True)
+import src.tracker.db
+from src.tracker.services import (
+    add_expense,
+    load_expenses,
+    spent_ratio,
+)
+
+
+# Test: Verify Test
+def test_app_function (monkeypatch):
+    #Testing Database
+    _testDB = 'tests/test_expenses.db'
+
+    
+    # Override the constant or environment variable directly inside the test
+    monkeypatch.setattr(src.tracker.db, "DB", str(_testDB))
+    # Or: monkeypatch.setenv("DATABASE_URL", f"sqlite:///{fake_db}")
+    
+    src.tracker.db.init_db()
+    assert os.path.exists(_testDB)
+
 
 
 # Test: Adding to DB
@@ -34,7 +45,3 @@ def test_spent_ratio():
     assert spent_ratio(spent=1500, budget=1000) > 1
     assert spent_ratio(spent=1000, budget=1000) == 1
 
-
-# Test: Return Dict Spent value with category
-def test_spent_by_category():
-    assert isinstance(spent_by_category, dict)

@@ -1,6 +1,8 @@
-import pandas as pd
-from src.tracker import db
 from datetime import date
+
+import pandas as pd
+
+from src.tracker import db
 
 CATEGORIES = ["Food", "Transport", "Bills", "Shopping", "Fun", "Other"]
 

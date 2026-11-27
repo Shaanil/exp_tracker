@@ -1,5 +1,6 @@
 from src.tracker.importer import phrase_amount
 
+
 def test_phrase_amount():
     assert phrase_amount("12.50") == 1250
     assert phrase_amount("0.10") == 10
